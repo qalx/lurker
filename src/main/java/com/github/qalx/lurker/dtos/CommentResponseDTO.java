@@ -7,10 +7,10 @@ import lombok.Data;
 public class CommentResponseDTO extends CommentDTO{
     Long id;
 
-    public CommentResponseDTO(Long id, String body, Long userId, Long postId) {
+    public CommentResponseDTO(Long id, String body, String username, Long postId) {
         this.id = id;
         this.body = body;
-        this.userId = userId;
+        this.username = username;
         this.postId = postId;
     }
 }

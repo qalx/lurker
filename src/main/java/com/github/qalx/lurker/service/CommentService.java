@@ -26,7 +26,8 @@ public class CommentService {
 
     public CommentDTO addComment(Long postId, CommentDTO commentDTO) {
         Post post = postRepository.findById(postId).get();
-        User user = userRepository.findById(commentDTO.getUserId()).get();
+        Long userId = userRepository.findByName(commentDTO.getUsername()).getId();
+        User user = userRepository.findById(userId).get();
         Comment comment = new Comment(commentDTO.getBody(), user, post);
         commentRepository.save(comment);
         return commentDTO;
@@ -36,14 +37,14 @@ public class CommentService {
         return commentRepository.findAll().stream().map(comment -> new CommentResponseDTO(
                 comment.getId(),
                 comment.getBody(),
-                comment.getUser().getId(),
+                comment.getUser().getName(),
                 comment.getPost().getId()
         )).collect(Collectors.toList());
     }
 
     public CommentResponseDTO findById(Long commentId) {
         Comment comment = commentRepository.findById(commentId).get();
-        return new CommentResponseDTO(comment.getId(), comment.getBody(), comment.getUser().getId(),
+        return new CommentResponseDTO(comment.getId(), comment.getBody(), comment.getUser().getName(),
                 comment.getPost().getId());
     }
 }
