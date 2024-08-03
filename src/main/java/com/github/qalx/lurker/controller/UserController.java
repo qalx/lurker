@@ -13,17 +13,17 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public User addUser(@RequestBody User user) {
         return userRepository.save(user);
     }
 
-    @RequestMapping
+    @GetMapping
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "{id}")
+    @DeleteMapping(value = "{id}")
             public User deleteUserById(@PathVariable long id) {
         User user = userRepository.findById(id).get();
         userRepository.delete(user);
